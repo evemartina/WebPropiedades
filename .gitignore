@@ -1,0 +1,80 @@
+# Dependencias de Composer
+/vendor/
+
+# Dependencias de Node
+/node_modules/
+
+# Archivos y directorios de entorno
+.env
+.env.backup
+.env.local
+.env.development
+.env.production
+.env.testing
+Homestead.yaml
+Homestead.json
+.vagrant/
+
+# Laravel log, caché y sesiones
+/storage/*.key
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+/storage/app/public/*
+
+# Laravel Mix y otros archivos generados por el frontend
+/public/hot
+/public/storage
+/public/mix-manifest.json
+/public/js/*
+/public/css/*
+/public/images/*
+/public/fonts/*
+/public/mix-manifest.json
+/public/build
+
+# IDE helpers, configuraciones y meta archivos
+/.idea/
+/.phpunit.result.cache
+/.phpunit.result.cache
+/_ide_helper.php
+/_ide_helper_models.php
+/.vscode/
+*.code-workspace
+
+# Ignorar archivos del testing y coverage
+/tests/.env
+/tests/.phpunit.result.cache
+/.phpunit.result.cache
+/coverage/
+
+# Ignorar archivos de base de datos SQLite
+*.sqlite
+*.sqlite3
+
+# Archivos Blade compilados
+/storage/framework/views/*.php
+
+# Ignorar archivos y configuraciones de caché de Composer
+composer.lock
+composer.phar
+
+# Ignorar archivos de configuración de npm/yarn
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
+yarn.lock
+package-lock.json
+.pnpm-lock.yaml
+
+# Otros archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de dependencias de terceros
+/public/vendor
+/resources/assets/vendor
+/resources/assets/js/vendor
