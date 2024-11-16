@@ -45,7 +45,7 @@ Homestead.json
 *.code-workspace
 
 # Ignorar archivos del testing y coverage
-/tests/.env
+/tests/*
 /tests/.phpunit.result.cache
 /.phpunit.result.cache
 /coverage/
