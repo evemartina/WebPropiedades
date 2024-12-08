@@ -16,7 +16,7 @@ class PropertyFactory extends Factory
             'nombre' => $this->faker->word,
             'descripcion' => $this->faker->paragraph,
             'direccion' => $this->faker->address,
-            'property_type_id' => PropertyType::factory(), // Genera un tipo de propiedad
+            'property_type_id' => $this->faker->numberBetween(1, 7), // Genera un tipo de propiedad
             'imagen_principal' => $this->faker->imageUrl(640, 480, 'house', true),
             'precio' => $this->faker->randomFloat(2, 100000, 1000000),
             'habitaciones' => $this->faker->numberBetween(1, 9),

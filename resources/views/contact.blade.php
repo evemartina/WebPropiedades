@@ -4,26 +4,55 @@
 
 @section('content')
 
-<section class="contact-form">
-    <div class="container">
-        <h2>Contáctanos</h2>
-        <form action="{{ route('contact.submit') }}" method="POST">
+<section class="contact-form rounded m-5 p-5 shadow-lg">
+    <div class="container-fluid">
+        <h2 class="display-3 fw-bold mb-5">Contáctanos</h2>
+        <form action="{{ route('enviarCorreo') }}" method="POST">
             @csrf
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" name="name" id="name" class="form-control" required>
+
+            <!-- Nombre -->
+            <div class="form-group row mb-4">
+                <label class="col-md-3 col-form-label fw-bold" for="nombre">Nombre</label>
+                <div class="col-md-9">
+                    <input type="text" name="nombre" id="nombre" class="form-control" required value="{{ old('nombre') }}">
+                    @error('nombre')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" class="form-control" required>
+
+            <!-- Email -->
+            <div class="form-group row mb-4">
+                <label class="col-md-3 col-form-label fw-bold" for="email">Email</label>
+                <div class="col-md-9">
+                    <input type="email" name="email" id="email" class="form-control" required value="{{ old('email') }}">
+                    @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
             </div>
-            <div class="form-group">
-                <label for="message">Mensaje</label>
-                <textarea name="message" id="message" class="form-control" rows="4" required></textarea>
+
+            <!-- Mensaje -->
+            <div class="form-group row mb-4">
+                <label class="col-md-3 col-form-label fw-bold" for="mensaje">Mensaje</label>
+                <div class="col-md-9">
+                    <textarea name="mensaje" id="mensaje" rows="4" class="form-control" required>{{ old('mensaje') }}</textarea>
+                    @error('mensaje')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+
+            <!-- Botón de Enviar -->
+            <div class="text-center mt-5">
+                <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+            </div>
         </form>
     </div>
 </section>
 
 @endsection
+
+@push('footer')
+    @include('layouts.partials.footer', ['info' => $info])
+@endpush

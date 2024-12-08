@@ -2,63 +2,55 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\PropertyType;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller{
 
 
     public function index()    {
-        $properties = Property::with('images', 'type')->ordenadasPorFecha()->take(5)->get();
-
-        // $casas_arriendo=Property::where();
-        // $depto_arriendo=Property::where();
-        // $local_arriendo=Property::where();
-
-        // $casa_venta=Property::where();
-        // $depto_venta=Property::where();
-        // $local_venta=Property::where();
+        $totalProperties = Property::count();  // Total de propiedades
+        $totalForSale = Property::where('operacion', 'venta')->count();  // Propiedades en venta
+        $totalForRent = Property::where('operacion', 'arriendo')->count();  // Propiedades en arriendo
+        $publishedProperties = Property::where('estado', 1)->count();  // Propiedades publicadas
+        $soldOrRentedProperties = Property::whereIn('estado', [0])->count();  // Propiedades vendidas o arrendadas
+        $newPropertiesLastWeek = Property::where('created_at', '>=', now()->subWeek())->count();  // Propiedades nuevas en la última semana
 
 
+        $totalViews = Property::sum('visitas');  // Total de visualizaciones de todas las propiedades
+        $mostViewedProperty = Property::orderBy('visitas', 'desc')->first();  // Propiedad más vista
+        $mostViewedProperties = Property::orderBy('visitas', 'desc')->take(10)->get(); // Propiedades más vistas
+        $typeCounts = Property::selectRaw('property_type_id, COUNT(*) as count')
+        ->groupBy('property_type_id')
+        ->get();
+        $propertyTypes = PropertyType::all();
 
 
-        return view('admin.dashboard', compact('properties'));
+        // Contar las propiedades por tipo
+        $typeLabels = [];
+        $typeValues = [];
+
+        foreach ($propertyTypes as $propertyType) {
+            $typeLabels[] = $propertyType->name;
+            $typeValues[] = $typeCounts->where('property_type_id', $propertyType->id)->first()->count ?? 0;
+        }
+
+
+
+        return view('admin.dashboard', compact(
+            'totalProperties',
+            'totalForSale',
+            'totalForRent',
+            'publishedProperties',
+            'soldOrRentedProperties',
+            'newPropertiesLastWeek',
+            'totalViews',
+            'mostViewedProperty',
+            'mostViewedProperties',
+            'typeLabels',
+            'typeValues'
+        ));
     }
 
-    // // Método para mostrar el formulario de creación de nuevas propiedades
-    // public function createProperty(){
-    //     return view('admin.propiedades.create_edit');
-    // }
 
-    // // Método para almacenar una nueva propiedad
-    // public function storeProperty(Request $request){
-    //     // Validar los datos
-    //     $request->validate([
-    //         'title' => 'required|string|max:255',
-    //         'price' => 'required|numeric',
-    //         'location' => 'required|string',
-    //         'description' => 'required|string',
-    //         'image' => 'required|image|max:2048',
-    //     ]);
-
-    //     // Subir la imagen
-    //     $path = $request->file('image')->store('images', 'public');
-
-    //     // Crear una nueva propiedad
-    //     Property::create([
-    //         'title' => $request->input('title'),
-    //         'price' => $request->input('price'),
-    //         'location' => $request->input('location'),
-    //         'description' => $request->input('description'),
-    //         'image' => $path,
-    //     ]);
-
-    //     return redirect()->route('admin.dashboard')->with('success', 'Propiedad creada con éxito');
-    // }
-
-    // // Método para eliminar una propiedad
-    // public function deleteProperty(Property $property)    {
-    //     $property->delete();
-
-    //     return redirect()->route('admin.dashboard')->with('success', 'Propiedad eliminada con éxito');
-    // }
 }

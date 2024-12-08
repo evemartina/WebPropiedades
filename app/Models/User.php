@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function propertyChangeLogs()
+    {
+        return $this->hasMany(PropertyChangeLog::class, 'user_id');
+    }
 }

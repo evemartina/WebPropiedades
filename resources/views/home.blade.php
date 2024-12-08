@@ -5,20 +5,19 @@
 @section('content')
 
 
-<section class="hero-home mb-3">
+<section class="hero-home">
     <div class="container-fluid ">
-        @include('propiedades.carrusel-home');
-
+        @include('propiedades.carrusel-home')
     </div>
 </section>
 
 <section class="featured-properties">
     <div class="container">
-        <h2 class="display-3 mb-5 text-center fw-bold" >Propiedades Destacadas</h2>
+        <h2 class="display-3 mb-3 text-center fw-bold" >Propiedades Destacadas</h2>
         @include('propiedades.filtro-pro')
 
         <div id="properties-list">
-            @include('propiedades.lista-destacado', ['properties' => $properties]);
+            @include('propiedades.lista-destacado', ['properties' => $properties])
         </div>
 
     </div>
@@ -62,3 +61,6 @@
 </script>
 
 @endsection
+@push('footer')
+    @include('layouts.partials.footer', ['info' => $info])
+@endpush

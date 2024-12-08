@@ -19,7 +19,7 @@ class RedirectToAdminOnSessionExpire
     {
         if (!Auth::check()) {
             // Redirige a la ruta "admin" cuando la sesión expire
-            return Redirect::to('/admin');
+            return Redirect::to('/login');
         }
 
         return $next($request);
